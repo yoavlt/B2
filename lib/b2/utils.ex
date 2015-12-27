@@ -40,4 +40,13 @@ defmodule B2.Utils do
     "#{root}#{path}="
   end
 
+  @doc """
+  FIXME: Required openssl
+  """
+  def sha1(file_path) do
+    args = ["dgst", "-sha1", file_path]
+    {res, 0} = System.cmd("openssl", args)
+    String.split(res, "=") |> Enum.at(1) |> String.strip
+  end
+
 end

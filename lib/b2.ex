@@ -28,7 +28,7 @@ defmodule B2 do
   def basic_auth_header do
     encoded = Base.encode64("#{account_id}:#{application_key}")
     %{"Authorization" => "Basic " <> encoded,
-      "Content-type" => "application/x-www-form-urlencoded"}
+      "Content-Type" => "application/x-www-form-urlencoded"}
   end
 
   @doc """
@@ -37,7 +37,7 @@ defmodule B2 do
   def auth_header do
     token = B2.AccountStore.application_token
     %{"Authorization" => token,
-      "Content-type" => "application/x-www-form-urlencoded"}
+      "Content-Type" => "application/x-www-form-urlencoded"}
   end
 
   @doc """

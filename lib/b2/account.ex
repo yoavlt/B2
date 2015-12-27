@@ -1,4 +1,4 @@
-defmodule B2.Accounts do
+defmodule B2.Account do
 
   @moduledoc """
   Account of B2 Cloud Storage manipulation module.
@@ -8,10 +8,14 @@ defmodule B2.Accounts do
     "/v1/b2_authorize_account"
 
   @doc """
-  Used to log in to the B2 API. Returns an authorization token that can be used for account-level operations, and a URL that should be used as the base URL for subsequent API calls.
+  Used to log in to the B2 API.
+  Returns an authorization token that can be used
+  for account-level operations, and a URL
+  that should be used as the base URL
+  for subsequent API calls.
 
   ## Example
-  iex) B2.Accounts.authorize
+  iex) B2.Account.authorize
   {:ok,
    %{"accountId" => "your_account_id",
      "apiUrl" => "https://api001.backblaze.com",

@@ -27,6 +27,13 @@ defmodule B2.API do
     |> handle_response
   end
 
+  def upload(url, body, header) do
+    HTTPoison.start
+    IO.inspect header
+    HTTPoison.post!(url, {:file, body}, header)
+    |> handle_response
+  end
+
   def delete(url) do
     HTTPoison.start
     HTTPoison.delete!(url, B2.auth_header)

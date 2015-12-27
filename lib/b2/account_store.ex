@@ -33,9 +33,16 @@ defmodule B2.AccountStore do
     GenServer.call(__MODULE__, :get_api_url)
   end
 
+  @doc """
+  fetch download url.
+  """
+  def download_url do
+    GenServer.call(__MODULE__, :get_download_url)
+  end
+
   ## Callback
   def handle_cast(:authorize, %{"initialized" => false} = state) do
-    case B2.Accounts.authorize do
+    case B2.Account.authorize do
       {:ok, result} ->
         state = Map.merge(%{"initialized" => true}, result)
         {:noreply, state}
@@ -48,21 +55,32 @@ defmodule B2.AccountStore do
   def handle_call(:get_token, _from, %{"token" => token} = state) do
     {:reply, token, state}
   end
-
   def handle_call(:get_token, _from, state) do
     on_authorized_call(state, fn %{"authorizationToken" => token} ->
       token
     end)
   end
 
+  def handle_call(:get_api_url, _from, %{"apiUrl" => url} = state) do
+    {:reply, url, state}
+  end
   def handle_call(:get_api_url, _from, state) do
     on_authorized_call(state, fn %{"apiUrl" => api_url} ->
       api_url
     end)
   end
 
+  def handle_call(:get_download_url, _from, %{"downloadUrl" => url} = state) do
+    {:reply, url, state}
+  end
+  def handle_call(:get_download_url, _from, state) do
+    on_authorized_call(state, fn %{"downloadUrl" => url} ->
+      url
+    end)
+  end
+
   defp on_authorized_call(state, on_ok) do
-    case B2.Accounts.authorize do
+    case B2.Account.authorize do
       {:ok, result} ->
         state = Map.merge(%{"initialized" => true}, result)
         {:reply, on_ok.(result), state}
