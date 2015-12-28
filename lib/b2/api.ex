@@ -18,8 +18,6 @@ defmodule B2.API do
 
   def post(url, req_body) do
     HTTPoison.start
-    query = req_body
-            |> B2.Utils.encode_query
 
     body = Poison.encode!(req_body)
 
@@ -29,7 +27,6 @@ defmodule B2.API do
 
   def upload(url, body, header) do
     HTTPoison.start
-    IO.inspect header
     HTTPoison.post!(url, {:file, body}, header)
     |> handle_response
   end
@@ -48,7 +45,6 @@ defmodule B2.API do
     {:error, %{"code" => code}}
   end
   defp handle_response(%HTTPoison.Response{body: body, status_code: _}) do
-    IO.inspect body
     {:error, Poison.decode!(body)}
   end
 

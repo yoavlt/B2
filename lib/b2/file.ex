@@ -22,17 +22,20 @@ defmodule B2.File do
   defp delete_file_version_url,
     do: B2.api_endpoint <> "/b2api/v1/b2_delete_file_version"
 
-  def delete_file_version(file_id, version) do
-  end
+  @doc """
+  Deletes one version of a file from B2.
 
-  @doc false
-  defp download_by_id(_file_id) do
-    # TODO
-  end
-
-  @doc false
-  defp download_by_name(_name) do
-    # TODO
+  iex> B2.File.delete_file_version("3_c123436...",
+    "filename.txt")
+    {:ok,
+      %{"fileId" => "3_c123436...",
+      "fileName" => "filename.txt"}}
+  """
+  def delete_file_version(file_id, file_name) do
+    B2.API.post(delete_file_version_url, %{
+      "fileName" => file_name,
+      "fileId" => file_id
+    })
   end
 
   @doc """

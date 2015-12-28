@@ -41,6 +41,14 @@ defmodule B2.Utils do
   end
 
   @doc """
+  Get downloadable url of file in the specified bucket.
+  """
+  def url(bucket_name, file_name) do
+    B2.AccountStore.download_url <>
+      "/file/#{bucket_name}/#{file_name}"
+  end
+
+  @doc """
   FIXME: Required openssl
   """
   def sha1(file_path) do
