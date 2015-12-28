@@ -9,7 +9,8 @@ defmodule B2.Mixfile do
     [app: :b2,
      version: "0.0.1",
      elixir: "~> 1.1",
-     name: "Webpay",
+     name: "B2",
+     description: @description,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
