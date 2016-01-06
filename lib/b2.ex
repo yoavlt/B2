@@ -40,16 +40,21 @@ defmodule B2 do
       "Content-Type" => "application/x-www-form-urlencoded"}
   end
 
+  defp config do
+    app = Mix.Project.config[:app]
+    Application.get_env(app, :b2)
+  end
+
   @doc """
   Get account id.
   """
   def account_id do
-    Application.get_env(:b2, :account_id) ||
+    config()[:account_id] ||
       System.get_env("B2_ACCOUNT_ID")
   end
 
   defp application_key do
-    Application.get_env(:b2, :application_key) ||
+    config()[:application_key] ||
       System.get_env("B2_APPLICATION_KEY")
   end
 
