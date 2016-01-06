@@ -9,7 +9,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   1. Add b2 to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:b2, "~> 0.0.1"}]
+          [{:b2, "~> 0.0.2"}]
         end
 
   2. Ensure b2 is started before your application:
