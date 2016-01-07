@@ -21,7 +21,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
   3. Puts config your `config.exs`
 
 ```elixir
-config :your_application, :b2,
+config :b2, B2,
   account_id: "your account id",
   application_key: "your application key"
 ```
