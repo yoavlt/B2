@@ -41,8 +41,7 @@ defmodule B2 do
   end
 
   defp config do
-    app = Mix.Project.config[:app]
-    Application.get_env(app, :b2)
+    Application.get_env(:b2, B2)
   end
 
   @doc """
