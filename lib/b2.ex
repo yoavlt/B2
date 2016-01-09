@@ -6,6 +6,7 @@ defmodule B2 do
 
     children = [
       worker(B2.AccountStore, []),
+      worker(B2.UrlPool, [])
     ]
 
     opts = [strategy: :one_for_one, name: B2.Supervisor]
@@ -52,7 +53,10 @@ defmodule B2 do
       System.get_env("B2_ACCOUNT_ID")
   end
 
-  defp application_key do
+  @doc """
+  Get application key.
+  """
+  def application_key do
     config()[:application_key] ||
       System.get_env("B2_APPLICATION_KEY")
   end

@@ -4,6 +4,8 @@ defmodule B2.File do
   Handle file module.
   """
 
+  alias B2.UrlPool
+
   defp upload_url_url,
     do: B2.api_endpoint <> "/b2api/v1/b2_get_upload_url"
 
@@ -122,7 +124,7 @@ defmodule B2.File do
   "fileInfo" => %{}, "fileName" => "filename.txt"}}
   """
   def upload(bucket_id, file_name, content_type, file_path) do
-    case upload_url(bucket_id) do
+    case UrlPool.get_upload_url(bucket_id) do
       {:ok, %{"authorizationToken" => token, "uploadUrl" => upload_url}} ->
         upload_file(token, upload_url, file_name, content_type, file_path)
       _ ->
