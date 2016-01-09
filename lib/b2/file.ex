@@ -134,17 +134,12 @@ defmodule B2.File do
 
   def upload_file(authorization_token, upload_url, file_name, content_type, file_path, opts \\ []) do
     %File.Stat{size: size} = File.stat!(file_path)
-    upload_file(authorization_token,
-      upload_url, file_name, content_type, size, file_path, opts)
-  end
-
-  def upload_file(authorization_token, upload_url, file_name, content_type, content_length, file_path, opts \\ []) do
     header = Map.merge(B2.auth_header, %{
       "Authorization"  => authorization_token,
       "X-Bz-File-Name" => URI.encode(file_name),
       "Content-Type" => content_type,
       "X-Bz-Content-Sha1" => B2.Utils.sha1(file_path),
-      "Content-Length" => content_length
+      "Content-Length" => size
     })
     B2.API.upload(upload_url, file_path, header, opts)
   end
