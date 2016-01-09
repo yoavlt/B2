@@ -123,22 +123,22 @@ defmodule B2.File do
   "fileId" => "1_c13974832947897894354_5843umfkdsaf_jkdfa",
   "fileInfo" => %{}, "fileName" => "filename.txt"}}
   """
-  def upload(bucket_id, file_name, content_type, file_path) do
+  def upload(bucket_id, file_name, content_type, file_path, opts) do
     case UrlPool.get_upload_url(bucket_id) do
       {:ok, %{"authorizationToken" => token, "uploadUrl" => upload_url}} ->
-        upload_file(token, upload_url, file_name, content_type, file_path)
+        upload_file(token, upload_url, file_name, content_type, file_path, opts)
       _ ->
         {:error, :failure}
     end
   end
 
-  def upload_file(authorization_token, upload_url, file_name, content_type, file_path) do
+  def upload_file(authorization_token, upload_url, file_name, content_type, file_path, opts) do
     %File.Stat{size: size} = File.stat!(file_path)
     upload_file(authorization_token,
-      upload_url, file_name, content_type, size, file_path)
+      upload_url, file_name, content_type, size, file_path, opts)
   end
 
-  def upload_file(authorization_token, upload_url, file_name, content_type, content_length, file_path) do
+  def upload_file(authorization_token, upload_url, file_name, content_type, content_length, file_path, opts) do
     header = Map.merge(B2.auth_header, %{
       "Authorization"  => authorization_token,
       "X-Bz-File-Name" => URI.encode(file_name),
@@ -146,7 +146,7 @@ defmodule B2.File do
       "X-Bz-Content-Sha1" => B2.Utils.sha1(file_path),
       "Content-Length" => content_length
     })
-    B2.API.upload(upload_url, file_path, header)
+    B2.API.upload(upload_url, file_path, header, opts)
   end
 
   @doc """

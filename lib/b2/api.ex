@@ -25,9 +25,10 @@ defmodule B2.API do
     |> handle_response
   end
 
-  def upload(url, body, header) do
+  def upload(url, body, header, opts \\ []) do
+    timeout = Keyword.get(opts, :timeout, 4000)
     HTTPoison.start
-    HTTPoison.post!(url, {:file, body}, header)
+    HTTPoison.post!(url, {:file, body}, header, timeout: timeout)
     |> handle_response
   end
 
