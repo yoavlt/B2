@@ -7,7 +7,7 @@ defmodule B2.Mixfile do
 
   def project do
     [app: :b2,
-     version: "0.0.5",
+     version: "0.0.6",
      elixir: "~> 1.1",
      name: "B2",
      description: @description,
